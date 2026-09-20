@@ -30,6 +30,26 @@ O jogo termina quando o personagem derrota todos os inimigos definidos para a av
 
 O código abaixo representa a primeira versão do sistema. Ele funciona, mas possui propositalmente vários problemas que deverão ser corrigidos durante a atividade.
 
+Personagem.java
+
+import java.util.ArrayList; public class Personagem { public String nome; public int vida; public int ouro; public ArrayList<Item> inventario = new ArrayList<>(); public Personagem(String nome) { this.nome = nome; this.vida = 100; this.ouro = 0; } public void atacar(Inimigo inimigo) { inimigo.vida -= 10; System.out.println( nome + " atacou " + inimigo.nome + " causando 10 de dano." ); } public void receberDano(int dano) { vida -= dano; } public void adicionarItem(Item item) { inventario.add(item); } public void mostrarStatus() { System.out.println("Personagem: " + nome); System.out.println("Vida: " + vida); System.out.println("Ouro: " + ouro); System.out.println("Itens: " + inventario.size()); } } 
+
+Item.java
+
+public class Item { public String nome; public String tipo; public int valor; public Item(String nome, String tipo, int valor) { this.nome = nome; this.tipo = tipo; this.valor = valor; } } 
+
+Inimigo.java
+
+public class Inimigo { public String nome; public String tipo; public int vida; public int dano; public Inimigo( String nome, String tipo, int vida, int dano ) { this.nome = nome; this.tipo = tipo; this.vida = vida; this.dano = dano; } public void atacar(Personagem personagem) { personagem.receberDano(dano); System.out.println( nome + " atacou " + personagem.nome + " causando " + dano + " de dano." ); } public boolean estaVivo() { return vida > 0; } } 
+
+Missao.java
+
+public class Missao { public String titulo; public String descricao; public boolean concluida; public Inimigo alvo; public Item recompensa; public int ouroRecompensa; public Missao( String titulo, String descricao, Inimigo alvo, Item recompensa, int ouroRecompensa ) { this.titulo = titulo; this.descricao = descricao; this.alvo = alvo; this.recompensa = recompensa; this.ouroRecompensa = ouroRecompensa; } public void concluir(Personagem personagem) { concluida = true; personagem.ouro += ouroRecompensa; personagem.adicionarItem(recompensa); System.out.println( "Missão concluída: " + titulo ); } } 
+
+JogoAventura.java
+
+public class JogoAventura { public static void main(String[] args) { Personagem heroi = new Personagem("Aventureiro"); Item pocao = new Item( "Poção de Cura", "POCAO", 20 ); Inimigo goblin = new Inimigo( "Goblin da Floresta", "GOBLIN", 30, 5 ); Missao missao = new Missao( "Problemas na Floresta", "Derrote o Goblin da Floresta", goblin, pocao, 25 ); while ( goblin.estaVivo() && heroi.vida > 0 ) { heroi.atacar(goblin); if (goblin.estaVivo()) { goblin.atacar(heroi); } } if (heroi.vida > 0) { missao.concluir(heroi); } heroi.mostrarStatus(); } } 
+
 ## Sua tarefa
 
 A versão apresentada possui campos públicos, tipos representados por String, classes excessivamente genéricas, acesso direto ao estado dos objetos e pouca utilização dos recursos oferecidos pela orientação a objetos.

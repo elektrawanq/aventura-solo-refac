@@ -1,6 +1,5 @@
 package Personagem;
 import java.util.ArrayList;
-
 import Inimigo.Inimigo;
 import Item.Item;
 
@@ -58,5 +57,29 @@ public class Personagem {
         System.out.println("Vida: " + vida);
         System.out.println("Ouro: " + ouro);
         System.out.println("Itens: " + inventario.size());
+        
+        // Impressão da tabela do inventário
+        System.out.println("Inventário:");
+        if(inventario.isEmpty()) {
+            System.out.println("(vazio)");
+            return;
+        }
+        int tamanhoNome = "Nome".length() + 1;
+        int tamanhoTipo = "Tipo".length() + 1;
+        int tamanhoValor = "Valor".length() + 1;
+        for(Item item : inventario) {
+            if(item.nome().length() > tamanhoNome)
+                tamanhoNome = item.nome().length() + 1;
+            if(item.tipo().length() > tamanhoTipo)
+                tamanhoTipo = item.tipo().length() + 1;
+            String itemValor = String.valueOf(item.valor());
+            if(itemValor.length() > tamanhoValor)
+                tamanhoValor = itemValor.length() + 1;
+        }
+        String cabecalho = "Nome" + " ".repeat(tamanhoNome - 4) + "Tipo" + " ".repeat(tamanhoTipo - 4) + "Valor" + " ".repeat(tamanhoValor - 5);
+        System.out.println(cabecalho);
+        for(Item item : inventario) {
+            System.out.println(item.nome() + " ".repeat(tamanhoNome - item.nome().length()) + item.tipo() + " ".repeat(tamanhoTipo - item.tipo().length()) + item.valor());
+        }
     }
 }
