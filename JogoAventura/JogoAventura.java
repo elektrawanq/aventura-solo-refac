@@ -1,5 +1,6 @@
 package JogoAventura;
-import Inimigo.*;
+import Inimigo.Inimigo;
+import Inimigo.Goblin;
 import Item.*;
 import Missao.*;
 import Personagem.Personagem;

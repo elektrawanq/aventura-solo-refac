@@ -30,7 +30,7 @@ public class Missao {
     public void concluir(Personagem personagem) {
         if(estadoMissao == EstadoMissao.CONCLUIDA) {
             personagem.adicionarOuro(ouroRecompensa);
-            personagem.adicionarItem(recompensa);
+            personagem.inventario().adicionarItem(recompensa);
             System.out.println("Missão concluída: " + titulo);
             // deveria aparecer uma mensagem mostrando o ouro e a recompensa
             personagem.mostrarStatus();
