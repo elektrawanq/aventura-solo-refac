@@ -1,6 +1,7 @@
 package Inventario;
 import java.util.List;
 import java.util.ArrayList;
+import Item.*;
 
 public class Inventario<T> {
     // Motivo de instanciar como List:  o código fica focado no comportamento genérico 
@@ -18,6 +19,15 @@ public class Inventario<T> {
     }
 
     public boolean buscarItem(T t) { return inventario.contains(t); }
+
+    public T buscarPorNome(String nome) throws ItemNaoEncontradoException {
+        for(T item : inventario){
+            if (item instanceof Item i && i.nome().equals(nome)){
+                return item;
+            }
+        } 
+        throw new ItemNaoEncontradoException("Item não encontrado: " + nome);
+    }
 
     public List<T> listar() { return inventario; }
 }
