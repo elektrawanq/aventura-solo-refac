@@ -59,6 +59,14 @@ public class Personagem {
         this.ouro -= ouro;
     }
 
+    public void adicionarItem(Item item) {
+        inventario.adicionarItem(item);
+    }
+
+    public void removerItem(Item item) {
+        inventario.removerItem(item);
+    }
+
     public void mostrarStatus() {
         System.out.println("Personagem: " + nome);
         System.out.println("Vida: " + vida);
@@ -78,8 +86,8 @@ public class Personagem {
         for (Item item : listaDeItens) {
             if (item.nome().length() > tamanhoNome)
                 tamanhoNome = item.nome().length() + 1;
-            if (item.getClass().toString().length() > tamanhoTipo)
-                tamanhoTipo = item.getClass().toString().length() + 1;
+            if (item.getClass().getSimpleName().length() > tamanhoTipo)
+                tamanhoTipo = item.getClass().getSimpleName().length() + 1;
             String itemValor = String.valueOf(item.valor());
             if (itemValor.length() > tamanhoValor)
                 tamanhoValor = itemValor.length() + 1;
@@ -88,8 +96,8 @@ public class Personagem {
                 + " ".repeat(tamanhoValor - 5);
         System.out.println(cabecalho);
         for (Item item : listaDeItens) {
-            System.out.println(item.nome() + " ".repeat(tamanhoNome - item.nome().length()) + item.getClass()
-                    + " ".repeat(tamanhoTipo - item.getClass().toString().length()) + item.valor());
+            System.out.println(item.nome() + " ".repeat(tamanhoNome - item.nome().length()) + item.getClass().getSimpleName()
+                    + " ".repeat(tamanhoTipo - item.getClass().getSimpleName().length()) + item.valor());
         }
     }
 }

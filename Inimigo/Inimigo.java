@@ -49,11 +49,12 @@ public abstract class Inimigo {
 
     public void mostrarStatus() {
         System.out.println("Inimigo: " + nome);
+        System.out.println("Tipo: " + getClass().getSimpleName());
         System.out.println("Vida: " + vida);
         System.out.println("Dano: " + dano);
     }
 
-    @Override // não sei se preciso disso
+    @Override 
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -63,5 +64,10 @@ public abstract class Inimigo {
         return Objects.equals(nome, other.nome) &&
                 vida == other.vida &&
                 dano == other.dano;
+    }
+
+    @Override // para não quebrar o contrato com equals()
+    public int hashCode() {
+        return Objects.hash(nome, vida, dano);
     }
 }
