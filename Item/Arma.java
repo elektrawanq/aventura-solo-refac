@@ -1,10 +1,9 @@
 package Item;
 
 public class Arma extends Item {
-    public Arma(String nome, String tipo, int valor) {
-        super(nome, tipo, valor);
+    public Arma(String nome, int valor) {
+        super(nome, valor);
     }
 
-    @Override 
-    public void usar() {}
+    // Não precisa implementar Usavel, pois não é finita.
 }

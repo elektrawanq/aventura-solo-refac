@@ -1,10 +1,14 @@
 package Item;
 
-public class Alimento extends Item {
-    public Alimento(String nome, String tipo, int valor) {
-        super(nome, tipo, valor);
+import Personagem.Personagem;
+
+public class Alimento extends Item implements Usavel {
+    public Alimento(String nome, int valor) {
+        super(nome, valor);
     }
 
-    @Override 
-    public void usar() {}
+    public void usar(Personagem personagem) {
+        super.diminuirValor(2, "Não há alimento disponível para aumentar a vitalidade.");
+        personagem.receberCura(10);
+    }
 }

@@ -4,12 +4,10 @@ import java.util.Objects;
 
 public abstract class Item {
     private final String nome;
-    private final String tipo;
     private int valor;
 
-    public Item(String nome, String tipo, int valor) {
+    public Item(String nome, int valor) {
         this.nome = nome;
-        this.tipo = tipo;
         this.valor = valor;
     }
 
@@ -17,16 +15,17 @@ public abstract class Item {
         return nome;
     }
 
-    public String tipo() {
-        return tipo;
-    }
-
     public int valor() {
         return valor;
     }
 
-    // Método abstrato que força cada subclasse a ter sua própria lógica de uso
-    public abstract void usar();
+    public void diminuirValor(int reducao, String msg) {
+        if (valor > 0) {
+            valor -= reducao;
+        } else {
+            System.out.println(msg);
+        }
+    }
 
     // Implementação de equals() para inventario.contains() em
     // Inventario.buscarItem()
@@ -42,13 +41,12 @@ public abstract class Item {
         Item other = (Item) obj; // permite acessar os atributos de obj enquanto objeto de classe Item
 
         return Objects.equals(nome, other.nome) && // Objects.equals pois se trata de String, evita NullPointerException
-                Objects.equals(tipo, other.tipo) &&
                 valor == other.valor; // comparação de tipos primitivos
     }
 
     @Override // sobrescrita de hashCode() na classe Object, produz um código compatível com a
               // definição de equals()
     public int hashCode() {
-        return Objects.hash(nome, tipo, valor);
+        return Objects.hash(nome, valor);
     }
 }
