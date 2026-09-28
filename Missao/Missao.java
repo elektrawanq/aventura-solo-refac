@@ -1,4 +1,5 @@
 package Missao;
+
 import Inimigo.Inimigo;
 import Item.Item;
 import Personagem.Personagem;
@@ -28,22 +29,21 @@ public class Missao {
     public EstadoMissao estadoMissao() { return estadoMissao; }
 
     public void concluir(Personagem personagem) {
-        if(estadoMissao == EstadoMissao.CONCLUIDA) {
-            personagem.adicionarOuro(ouroRecompensa);
-            personagem.inventario().adicionarItem(recompensa);
-            System.out.println("Missão concluída: " + titulo);
-            // deveria aparecer uma mensagem mostrando o ouro e a recompensa
-            personagem.mostrarStatus();
-        }
+        if (estadoMissao != EstadoMissao.PENDENTE) return;
+        if (alvo.estaVivo()) return;
+
+        estadoMissao = EstadoMissao.CONCLUIDA;
+        personagem.adicionarOuro(ouroRecompensa);
+        personagem.inventario().adicionarItem(recompensa);
+        System.out.println("Missão concluída: " + titulo);
+        System.out.println("Recompensa: " + ouroRecompensa + " moedas");
+        System.out.println("            " + recompensa.nome());
     }
 
-    public void falhou(Personagem personagem) {
-        if(estadoMissao == EstadoMissao.FALHOU) {
+    public void falhou() {
+        if (estadoMissao != EstadoMissao.PENDENTE) return;
+        estadoMissao = EstadoMissao.FALHOU;
         System.out.println("A missão " + titulo + " falhou.");
-        personagem.mostrarStatus();
-        //inimigo.mostrarStatus();
-        // deveria aparecer uma mensagem monstrando os itens remanescentes do personagem
-        // ou algo sobre o inimigo
-        }
+        alvo.mostrarStatus();
     }
 }
