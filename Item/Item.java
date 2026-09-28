@@ -19,14 +19,6 @@ public abstract class Item {
         return valor;
     }
 
-    public void diminuirValor(int reducao, String msg) {
-        if (valor > 0) {
-            valor -= reducao;
-        } else {
-            System.out.println(msg);
-        }
-    }
-
     // Implementação de equals() para inventario.contains() em
     // Inventario.buscarItem()
 

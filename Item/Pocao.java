@@ -9,7 +9,7 @@ public class Pocao extends Item implements Usavel {
 
     @Override
     public void usar(Personagem personagem) {
-        super.diminuirValor(1, "Não há poção disponível para cura.");
         personagem.receberCura(15);
+        personagem.removerItem(this);
     }
 }

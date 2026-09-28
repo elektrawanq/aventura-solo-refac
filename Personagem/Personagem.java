@@ -1,7 +1,7 @@
 package Personagem;
 
 import java.util.List;
-import Inimigo.Inimigo;
+import Inimigo.*;
 import Inventario.Inventario;
 import Item.Item;
 
@@ -34,13 +34,25 @@ public class Personagem {
         return inventario;
     }
 
+    public boolean estaVivo() {
+        return vida > 0;
+    }
+
     public void atacar(Inimigo inimigo) {
         inimigo.receberDano(10);
-        System.out.println(nome + " atacou " + inimigo.nome() + " causando 10 de dano.");
+        int dano = 10;
+        if (inimigo instanceof Goblin) {
+            dano *= 2;
+        }
+        System.out.println(nome + " atacou " + inimigo.nome() + " causando " + dano + " de dano.");
     }
 
     public void receberCura(int cura) {
-        vida += cura;
+        if (cura > 0) {
+            vida += cura;
+        }
+        if (vida > 100)
+            vida = 100;
         System.out.println(nome + " recebeu " + cura + " de cura.");
     }
 
@@ -57,6 +69,8 @@ public class Personagem {
 
     public void removerOuro(int ouro) {
         this.ouro -= ouro;
+        if (ouro < 0)
+            this.ouro = 0;
     }
 
     public void adicionarItem(Item item) {
@@ -96,8 +110,9 @@ public class Personagem {
                 + " ".repeat(tamanhoValor - 5);
         System.out.println(cabecalho);
         for (Item item : listaDeItens) {
-            System.out.println(item.nome() + " ".repeat(tamanhoNome - item.nome().length()) + item.getClass().getSimpleName()
-                    + " ".repeat(tamanhoTipo - item.getClass().getSimpleName().length()) + item.valor());
+            System.out.println(
+                    item.nome() + " ".repeat(tamanhoNome - item.nome().length()) + item.getClass().getSimpleName()
+                            + " ".repeat(tamanhoTipo - item.getClass().getSimpleName().length()) + item.valor());
         }
     }
 }

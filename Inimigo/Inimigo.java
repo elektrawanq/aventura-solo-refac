@@ -32,7 +32,11 @@ public abstract class Inimigo {
         // não é necessário verificar "quem chamou" dentro do método.
         // A responsabilidade fica distribuída entre as classes, não por inspeção de
         // tipos.
-        vida += cura;
+        if (cura > 0) {
+            vida += cura;
+        }
+        if (vida > 100)
+            vida = 100;
         System.out.println(nome + " recebeu " + cura + " de cura.");
     }
 
@@ -54,7 +58,7 @@ public abstract class Inimigo {
         System.out.println("Dano: " + dano);
     }
 
-    @Override 
+    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -62,12 +66,11 @@ public abstract class Inimigo {
             return false;
         Inimigo other = (Inimigo) obj;
         return Objects.equals(nome, other.nome) &&
-                vida == other.vida &&
                 dano == other.dano;
     }
 
     @Override // para não quebrar o contrato com equals()
     public int hashCode() {
-        return Objects.hash(nome, vida, dano);
+        return Objects.hash(nome, dano);
     }
 }

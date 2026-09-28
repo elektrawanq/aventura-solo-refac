@@ -13,12 +13,14 @@ public class Goblin extends Inimigo {
     public void atacar(Personagem personagem) {
         personagem.receberDano(dano());
         System.out.println(nome() + " atacou " + personagem.nome() + " causando " + dano() + " de dano.");
-        int danoAplicado = dano();
-        if (danoAplicado > 1)
-            danoAplicado = dano() / 2;
-        personagem.receberDano(danoAplicado);
-        System.out.println(
-                nome() + " atacou novamente " + personagem.nome() + " causando mais " + danoAplicado + " de dano.");
+        if (personagem.vida() > 0) {
+            int danoAplicado = dano();
+            if (danoAplicado > 1)
+                danoAplicado = dano() / 2;
+            personagem.receberDano(danoAplicado);
+            System.out.println(
+                    nome() + " atacou novamente " + personagem.nome() + " causando mais " + danoAplicado + " de dano.");
+        }
     }
 
     @Override

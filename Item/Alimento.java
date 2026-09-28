@@ -7,8 +7,9 @@ public class Alimento extends Item implements Usavel {
         super(nome, valor);
     }
 
+    @Override 
     public void usar(Personagem personagem) {
-        super.diminuirValor(2, "Não há alimento disponível para aumentar a vitalidade.");
         personagem.receberCura(10);
+        personagem.removerItem(this);
     }
 }

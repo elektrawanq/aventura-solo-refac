@@ -7,6 +7,7 @@ public class Arqueiro extends Personagem {
         super(nome);
     }
 
+    @Override 
     public void atacar(Inimigo inimigo) {
         inimigo.receberDano(20);
         System.out.println("O arqueiro " + nome() + " mira com calma e acerta um Tiro Preciso!");

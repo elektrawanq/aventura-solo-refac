@@ -15,7 +15,8 @@ public class Missao {
     private int ouroRecompensa;
     private EstadoMissao estadoMissao;
 
-    public Missao(String titulo, String descricao, List<Inimigo> alvo, List<Personagem> listaHerois, List<Item> recompensa, int ouroRecompensa) {
+    public Missao(String titulo, String descricao, List<Inimigo> alvo, List<Personagem> listaHerois,
+            List<Item> recompensa, int ouroRecompensa) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.alvo = alvo;
@@ -77,9 +78,23 @@ public class Missao {
                 + " ".repeat(tamanhoValor - 5);
         System.out.println(cabecalho);
         for (Item item : recompensa) {
-            System.out.println(item.nome() + " ".repeat(tamanhoNome - item.nome().length()) + item.getClass().getSimpleName()
-                    + " ".repeat(tamanhoTipo - item.getClass().getSimpleName().length()) + item.valor());
+            System.out.println(
+                    item.nome() + " ".repeat(tamanhoNome - item.nome().length()) + item.getClass().getSimpleName()
+                            + " ".repeat(tamanhoTipo - item.getClass().getSimpleName().length()) + item.valor());
         }
+        for (Personagem personagem : listaHerois) {
+            personagem.mostrarStatus();
+        }
+    }
+
+    public boolean verificarConclusao() {
+        if (estadoMissao != EstadoMissao.EM_ANDAMENTO)
+            return false;
+        for (Inimigo inimigo : alvo) {
+            if (inimigo.estaVivo())
+                return false;
+        }
+        return true;
     }
 
     public void iniciarMissao() {
@@ -87,19 +102,16 @@ public class Missao {
     }
 
     public void concluir() {
-        estadoMissao = EstadoMissao.CONCLUIDA;
-        for (Personagem personagem : listaHerois) {
-            personagem.adicionarOuro(ouroRecompensa);
-        }
-        for (Item item : recompensa) {
+        if (verificarConclusao()) {
+            estadoMissao = EstadoMissao.CONCLUIDA;
             for (Personagem personagem : listaHerois) {
-                personagem.adicionarItem(item);
+                personagem.adicionarOuro(ouroRecompensa);
             }
-        }
-        // Impressão da tela final
-        imprimirTelaDeConclusao();
-        for (Personagem personagem : listaHerois) {
-            personagem.mostrarStatus();
+            for (Item item : recompensa) {
+                for (Personagem personagem : listaHerois) {
+                    personagem.adicionarItem(item);
+                }
+            }
         }
     }
 
@@ -110,8 +122,8 @@ public class Missao {
         for (Personagem personagem : listaHerois) {
             personagem.mostrarStatus();
         }
-        for (Inimigo ini : alvo) {
-            ini.mostrarStatus();
+        for (Inimigo inimigo : alvo) {
+            inimigo.mostrarStatus();
         }
     }
 }
